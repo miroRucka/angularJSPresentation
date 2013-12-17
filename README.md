@@ -11,4 +11,3 @@ Presentation about AngularJS
 - controller
 - DI pattern
 - some CRUD application for example (mongolab)
-#
