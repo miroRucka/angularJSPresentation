@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="sk" ng-app="pads">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>AngularJS PADS</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write('<link rel="stylesheet" href="css/print/' + ( window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">');
+    </script>
+
+
+    <script src="../js/jquery-1.4.2.min.js"></script>
+    <script src="../js/angular.js"></script>
+    <script src="../js/angular-resource.js"></script>
+    <script src="../js/miniAppModule.js"></script>
+    <script src="../js/padsApp.js"></script>
+    <script src="lib/js/html5shiv.js"></script>
+
+
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+    <img src="../img/angular_logo.png" class="logo" width="400"/>
+
+    <h1 class="nadpis">AngularJS</h1>
+</section>
+
+<section>
+    <h3>obsah</h3>
+    <ul>
+        <li>
+            <a href="#" onclick="Reveal.slide(0); return false;">Čo to je AngularJS</a>
+            <a href="#" onclick="Reveal.slide(0); return false;">Motivácie pre vývoj</a>
+        </li>
+
+    </ul>
+</section>
+
+<section>
+    <section>
+        <h3>Čo to je AngularJS</h3>
+        <ul>
+            <li>Je to framework na tvorbu web aplikácií</li>
+            <li>Čistý javascript</li>
+            <li>Implementácia MVC patternu v javascripte</li>
+            <li>Vyvinutý v Google (československým tímom o 3 ľuďoch)</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Čo nie je AngularJS</h3>
+        <ul>
+            <li>Ďalšia knižnica na manipuláciu s DOM</li>
+            <li>Util knižnica (aj keď obsahuje takúto časť)</li>
+            <li>Templating knižnica</li>
+        </ul>
+    </section>
+</section>
+
+<section>
+    <h3>Prečo by mohol byť AngularJS zaujímavý aj pre nás?</h3>
+    <ul>
+        <li>dvojcestný data binding</li>
+        <li>zapúzdrený templating</li>
+        <li>dependency injection</li>
+        <li>prípravený použiť REST API napríklad existujúcej mobilnej app</li>
+        <li>directives - rozšírenie jazyka html</li>
+        <li>združuje html komponenty a ponúka ich ako znovupožiteľný kód</li>
+    </ul>
+</section>
+
+<section>
+    <section>
+        <h3>Dvojcestný data binding</h3>
+        <input ng-init="name='PADS';" type="text" ng-model="name" placeholder="meno" class="styled">
+        <p>Ahoj {{name}}!</p>
+        <pre><code class="html">
+        &lthtml ng-app&gt
+        ...
+        &ltscript src="../js/angular.js"&gt&lt/script&gt
+        ...
+        &ltinput type="text" ng-model="name" placeholder="meno"&gt
+        &ltp&gtAhoj &#123; &#123;name&#125; &#125; &lt/p&gt
+        ....
+        &lt/html&gt
+        </code></pre>
+    </section>
+    <section>
+        <h3>jQuery</h3>
+        <input id="nameInputId"  type="text" placeholder="meno" class="styled">
+        <p>Ahoj <span id="nameTextId"></span>!</p>
+        <script>
+            (function(){
+                var INIT = 'PADS';
+                var nameInput = $("#nameInputId");
+                nameInput.val(INIT);
+                var nameText = $("#nameTextId");
+                nameText.text(INIT);
+                nameInput.bind('keyup', function(){
+                    nameText.text($(this).val());
+                });
+            }());
+        </script>
+        <pre><code class="html">
+        &ltscript src="../js/jquery.js"&gt&lt/script&gt
+        ...
+        &ltinput id="nameInputId"  type="text" placeholder="meno"&gt
+        &ltp&gtAhoj &ltspan id="nameTextId"&gt&lt/span&gt!&lt/p&gt
+        &ltscript&gt
+        (function(){
+            var INIT = 'PADS';
+            var nameInput = $("#nameInputId");
+            nameInput.val(INIT);
+            var nameText = $("#nameTextId");
+            nameText.text(INIT);
+            nameInput.bind('keyup', function(){
+                nameText.text($(this).val());
+            });
+        }());
+        &lt/script&gt
+        </code></pre>
+    </section>
+    <section>
+        <img src="../img/Two_Way_Data_Binding.png"/> <img src="../img/One_Way_Data_Binding.png" height="290" width="400"/>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>Directives</h3>
+        <p>Directives vytvárajú možnosť rozšíriť HTML jazyk</p>
+        <input type="text" ng-init="format='HH:mm:ss'" ng-model="format" class="styled">
+        <br/>
+        <hodinky format="format"></hodinky>
+        <pre><code class="html">
+&lt!-- klasicky pristup --&gt
+&ltspan id="hodinky"&gt
+    &ltspan data-format="HH:mm:ss"&gt
+
+    &lt/span&gt
+&lt/span&gt
+&ltscript&gt
+    //nacitam format z DOM podla attr
+    //inicializujem timeout a
+    //v pravidelnych intervaloch plnim data
+    //do elementu na zaklade id
+&lt/script&gt
+        </code></pre>
+
+        <pre><code class="html">
+&lt!-- angularJS pristup --&gt
+&ltinput type="text" ng-init="format='HH:mm:ss'" ng-model="format"&gt
+&lthodinky format="format"&gt&lt/hodinky&gt
+        </code></pre>
+    </section>
+    <section>
+        <h3>Directives</h3>
+        <pre><code class="html">
+    &lt!-- klasicky pristup --&gt
+    &lt!-- tlacidla --&gt
+    &ltdiv class="tabs"&gt
+        &ltul&gt
+            &ltli class="active tab"&gt
+               &lta href="#" onclick="showTab(I);"&gttitleI&lt/a&gt
+            &lt/li&gt
+            &ltli class="tab"&gt
+                &lta href="#" onclick="showTab(II);"&gttitleII&lt/a&gt
+            &lt/li&gt
+        &lt/ul&gt
+    &lt/div&gt
+    &lt!-- obsah --&gt
+    &ltdiv class="tabs"&gt
+        &ltdiv id="paneI"&gt
+        ...
+        &lt/div&gt
+        &ltdiv id="paneII"&gt
+        ...
+        &lt/div&gt
+    &lt/div&gt
+    &ltscript&gt
+    ...
+    &lt/script&gt
+        </code></pre>
+
+        <pre><code class="html">
+    &lt!-- angularJS pristup --&gt
+    &lttabs&gt
+        &lttab title="title"&gt
+        ...
+        &lt/tab&gt
+        &lttab title="titleII"&gt
+        ...
+        &lt/tab&gt
+    &lt/tabs&gt
+        </code></pre>
+    </section>
+    <section>
+        <h3>Directives - kód</h3>
+        <pre><code class="javascript">
+var myModule = angular.module(...);
+
+myModule.directive('directiveName', function factory(inject) {
+    var directiveDefinitionObject = {
+        priority: 0,
+        template: '&ltdiv&gt&lt/div&gt',
+        templateUrl: 'directive.html',
+        replace: false,
+        restrict: 'A',
+        scope: false,
+        transclude: true,
+        compile: function compile(tElement, tAttrs, transclude) {
+            ...
+        },
+        link: function postLink(scope, iElement, iAttrs) {
+            ...
+        }
+    };
+    return directiveDefinitionObject;
+});
+        </code></pre>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>Controller použitie</h3>
+        <ul>
+            <li>inicializácia</li>
+            <li>pridanie správania</li>
+            <li>manipulácia s modelom v rámci bussiness logiky</li>
+        </ul>
+        <br/><br/>
+        <div ng-controller="PadsController">
+            <div>
+                <input type="text"  ng-model="newUlica" class="styled" size="10" placeholder="Ulica"/>
+                <input type="text"  ng-model="newMesto" class="styled" size="10" placeholder="Mesto"/>
+                <span><a href="javascript:void(0)" ng-click="createItem();">+</a></span>
+            </div>
+            <ol>
+                <li ng-repeat="adresa in adresy">
+                    <span contenteditable="true" update="{{$index}}">{{adresa.ulica}}</span> <a href="javascript:void(0)" ng-click="showFull($index)">(i)</a> <a href="javascript:void(0)" ng-click="deleteItem($index)">(X)</a>
+                </li>
+            </ol>
+        </div>
+    </section>
+    <section>
+        <h3>Nepoužívať na</h3>
+        <ul>
+            <li>
+                manipuláciu s DOM (databinding)
+            </li>
+            <li>
+                formátovanie vstupu / výstupu (filters)
+            </li>
+            <li>
+                kód ktorý má byť zdielaný medzi viac controllermi (service a DI)
+            </li>
+        </ul>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>Scope</h3>
+        <ul>
+            <li>
+                je to objekt ktorý referencuje model
+            </li>
+            <li>
+                jeho štruktúra je hierarchická a kopíruje DOM elementy
+            </li>
+            <li>
+                má metódu na sledovanie zmien v modeli <code>$$watch</code>
+            </li>
+            <li>
+                má metódu na propagovanie zmien v modeli <code>$$apply</code>
+            </li>
+            <li>
+                scope je tmel medzi <i>controller</i> a <i>view</i>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h3>Hierarchia scope</h3>
+        <div>root scope - name: {{name}}</div>
+        <div ng-controller="ScopeController" class="hierarchia">
+            <button ng-click="$broadcast('MyEvent')">$broadcast('MyEvent')</button>
+            <div class="hierarchia">
+                child scope-s: <br>
+                pozícia: {{clovek.pozicia}}, divízia: {{divizia}} {{count}}
+            </div>
+            <ul class="hierarchia">
+                <li ng-repeat="clovek in ludia" class="hierarchia">
+                    <span>{{clovek.meno}}, {{clovek.pozicia}}, {{divizia}} {{count}}</span>
+                </li>
+            </ul>
+        </div>
+        <pre><code class="javascript">
+function ScopeController($scope) {
+    //inicializacia
+    var ludia = new Array();
+    ludia.push({meno:"Mark", pozicia:"developer"});
+    ludia.push({meno:"Jink", pozicia:"designer"});
+    $scope.ludia = ludia;
+    $scope.clovek = {pozicia: "manager"};
+    $scope.divizia = "SW78";
+}
+        </code></pre>
+    </section>
+    <section>
+        <h3>Scope a MVC</h3>
+        <img src="../img/scope.png" width="400" height="290"/> <img src="../img/concepts-model.png" width="400" height="290"/>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>Filter</h3>
+        <ul>
+            <li>filter slúži na modifikáciu výstupu</li>
+            <li>formátovanie čísel</li>
+            <li>práca so string-om a podobne</li>
+            <input ng-init="filter='';" type="text" ng-model="filter" placeholder="reťazec" class="styled">
+            <input ng-init="size=3;" type="text" ng-model="size" placeholder="sub" class="styled">
+            <p>Bez filtra {{filter}}!</p>
+            <p>Reverse & up (filter chain f1|f2)<br> {{filter|reverse|uppercase}}!</p>
+            <p>Sub & param({{size}}) {{filter|substring:size}}!</p>
+            <p>Angular number:{{size}} {{filter|number:size}}!</p>
+        </ul>
+    </section>
+    <section>
+        <h3>Filter - zápis</h3>
+        <pre><code class="javascript">
+module.filter('reverse', function() {
+    return function(input) {
+        var out = "";
+        for (var i = 0; i < input.length; i++) {
+            out = input.charAt(i) + out;
+        }
+        return out;
+    }
+});
+
+module.filter('substring', function() {
+    return function(input, size) {
+        return input.substring(0,size);
+    }
+});
+        </code></pre>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>DI</h3>
+        <p>Angular podporuje návrhový vzor DI. Poskytuje možnosť vytvoriť službu / objekt ... a následne ho vložiť kdekoľvek v aplikácii, bez toho aby komponenta kde je závislosť vkladaná vedela ako sa vytvára a kde sa nachádza.</p>
+        <div ng-controller="DIController">
+            <button ng-click="sluzba();">Zavolaj sluzbu!</button>
+            <button ng-click="sluzbaMeno();">Meno!</button>
+        </div>
+    </section>
+    <section>
+        <h3>DI - definícia</h3>
+        <pre><code class="javascript">
+module.factory('sluzba', function($window){
+    var Sluzba = function(){
+        this.pozdrav = function(){
+            $window.alert('ahoj sluzba!');
+        }
+    };
+    Sluzba.prototype.meno = function(){
+        $window.alert('moje meno je sluzba');
+    };
+    return new Sluzba();
+});
+
+function DIController($scope, sluzba){
+    $scope.sluzba = function(){
+        sluzba.pozdrav();
+    };
+}
+        </code></pre>
+    </section>
+    <section>
+        <h3>DI - modul a injektor</h3>
+        <p>Služba / objekt je vytvorený ako singleton a pri vytvorení je zapísaný do internej cache.</p>
+        <img src="../img/concepts-module-injector.png">
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>Mini aplikácia</h3>
+        <p>K web aplikácii potrebujeme ešte preklik na rôzne sekcie a komunikáciu so serverom.</p>
+    </section>
+    <section>
+        <h3>Silná evidencia</h3>
+        <div ng-view>
+
+        </div>
+    </section>
+</section>
+
+<section>
+    <h3>Zdroje</h3>
+</section>
+</div>
+
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls:true,
+        progress:true,
+        history:true,
+        center:true,
+        rollingLinks:false,
+
+        theme:Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition:Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies:[
+            { src:'lib/js/classList.js', condition:function () {
+                return !document.body.classList;
+            } },
+            { src:'plugin/markdown/showdown.js', condition:function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src:'plugin/markdown/markdown.js', condition:function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src:'plugin/highlight/highlight.js', async:true, callback:function () {
+                hljs.initHighlightingOnLoad();
+            } },
+            { src:'plugin/zoom-js/zoom.js', async:true, condition:function () {
+                return !!document.body.classList;
+            } },
+            { src:'plugin/notes/notes.js', async:true, condition:function () {
+                return !!document.body.classList;
+            } }
+            // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<style>
+    .top {
+        margin-top: 60px;
+    }
+    .table td.center {
+        text-align: center;
+    }
+</style>
+<table class="table table-striped table-bordered top">
+    <thead>
+    <tr>
+        <th>
+            meno
+        </th>
+        <th>
+            adresa
+        </th>
+        <th>
+            pozícia
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="clovek in ludia | filter:search">
+        <td>
+            {{clovek.meno}}
+        </td>
+        <td>
+            {{clovek.adresa}}
+        </td>
+        <td>
+            {{clovek.pozicia}}
+        </td>
+        <td class="center">
+            <a href="#/edit/{{clovek._id.$oid}}">edit</a>
+        </td>
+        <td class="center">
+            <a href="javascript:void(0)" ng-click="odstranPolozku(clovek._id.$oid)">X</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sk" ng-app="pads">
+    <head>
+        <title>PADS - web app</title>
+
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="../css/bootstrap.css">
+
+        <link rel="stylesheet" href="../css/bootstrap-responsive.css">
+
+        <script src="../js/jquery-1.4.2.min.js"></script>
+        <script src="../js/angular.js"></script>
+        <script src="../js/angular-resource.js"></script>
+        <script src="../js/miniAppModule.js"></script>
+        <script src="../js/padsApp.js"></script>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">PADS</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#/new">Nová položka</a></li>
+                        </ul>
+                        <form class="navbar-form pull-right">
+                            <input class="span2"  ng-model="search" type="text" placeholder="Filtruj">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-view class="container">
+
+        </div>
+    </body>
+</html>

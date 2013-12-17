@@ -1,0 +1,34 @@
+<style>
+    .top {
+        margin-top: 60px;
+    }
+</style>
+<form class="form-horizontal top">
+    <div class="control-group">
+        <label class="control-label" for="inputMeno">Meno</label>
+        <div class="controls">
+            <input type="text" id="inputMeno" placeholder="Meno" ng-model="newClovek.meno">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputAdresa">Adresa</label>
+        <div class="controls">
+            <input type="text" id="inputAdresa" placeholder="Adresa" ng-model="newClovek.adresa">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="selectPozicia">Pozícia</label>
+        <div class="controls">
+            <select id="selectPozicia" ng-model="newClovek.pozicia" ng-options="pozicia for pozicia in pozicie">
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn btn-success" ng-click="pridajPolozku();" ng-show="createMode">Pridaj položku</button>
+        </div>
+        <div class="controls">
+            <button type="submit" class="btn btn-success" ng-click="editujPolozku();" ng-show="editMode">Ulož položku</button>
+        </div>
+    </div>
+</form>
