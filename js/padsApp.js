@@ -1,13 +1,13 @@
-var module = angular.module('pads', ['miniAppServices']);
+var app = angular.module('pads', ['miniAppServices']);
 
-module.config(function($routeProvider) {
+app.config(function($routeProvider) {
     $routeProvider.
         when('/', {controller:MiniAppListController, templateUrl:'template/appList.html'}).
         when('/edit/:idClovek', {controller:MiniAppEditController, templateUrl:'template/appForm.html'}).
         when('/new', {controller:MiniAppNewController, templateUrl:'template/appForm.html'});
 });
 
-module.filter('reverse', function() {
+app.filter('reverse', function() {
     return function(input, uppercase) {
         var out = "";
         for (var i = 0; i < input.length; i++) {
@@ -21,13 +21,13 @@ module.filter('reverse', function() {
     }
 });
 
-module.filter('substring', function() {
+app.filter('substring', function() {
     return function(input, size) {
        return input.substring(0,size);
     }
 });
 
-module.factory('sluzba', function($window){
+app.factory('sluzba', function($window){
     var Sluzba = function(){
         this.pozdrav = function(){
             $window.alert('ahoj sluzba!');
@@ -39,7 +39,7 @@ module.factory('sluzba', function($window){
     return new Sluzba();
 });
 
-module.factory('appService', function(){
+app.factory('appService', function(){
     var Service = function(){
         this.pozdrav = function(){
             $window.alert('ahoj sluzba!');
@@ -52,7 +52,7 @@ module.factory('appService', function(){
 });
 
 //directive hodinky - skratena verzia zapisu
-module.directive('hodinky', function ($timeout, dateFilter) {
+app.directive('hodinky', function ($timeout, dateFilter) {
     var result = {
         restrict:'E',
         template:'<span></span>',
@@ -77,7 +77,7 @@ module.directive('hodinky', function ($timeout, dateFilter) {
     return result;
 });
 
-module.directive('update', function ($timeout, dateFilter) {
+app.directive('update', function ($timeout, dateFilter) {
     return function(scope, element, attrs) {
         $(element).bind('blur', function (e) {
             var index = attrs.update;

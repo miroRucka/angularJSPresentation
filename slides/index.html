@@ -51,11 +51,16 @@
 <section>
     <h3>obsah</h3>
     <ul>
-        <li>
-            <a href="#" onclick="Reveal.slide(0); return false;">Čo to je AngularJS</a>
-            <a href="#" onclick="Reveal.slide(0); return false;">Motivácie pre vývoj</a>
-        </li>
-
+        <li><a href="#" onclick="Reveal.slide(2); return false;">Čo to je AngularJS</a></li>
+        <li><a href="#" onclick="Reveal.slide(3); return false;">Motivácie pre vývoj</a></li>
+        <li><a href="#" onclick="Reveal.slide(4); return false;">Dvojcestný data binding</a></li>
+        <li><a href="#" onclick="Reveal.slide(5); return false;">Directives</a></li>
+        <li><a href="#" onclick="Reveal.slide(6); return false;">Controller</a></li>
+        <li><a href="#" onclick="Reveal.slide(7); return false;">Scope</a></li>
+        <li><a href="#" onclick="Reveal.slide(8); return false;">Filter</a></li>
+        <li><a href="#" onclick="Reveal.slide(9); return false;">Dependency injection</a></li>
+        <li><a href="#" onclick="Reveal.slide(10); return false;">Testovanie</a></li>
+        <li><a href="#" onclick="Reveal.slide(11); return false;">Mini aplikácia</a></li>
     </ul>
 </section>
 
@@ -63,11 +68,16 @@
     <section>
         <h3>Čo to je AngularJS</h3>
         <ul>
-            <li>Je to framework na tvorbu web aplikácií</li>
-            <li>Čistý javascript</li>
+            <li>Je to framework na tvorbu Single page application</li>
+            <li>Čistý javascript (jQuery lite)</li>
             <li>Implementácia MVC patternu v javascripte</li>
+            <li>Vytvára poriadok v klientskej časti - oddeľuje správanie od zobrazovania (declarative vs. imperative)</li>
             <li>Vyvinutý v Google (československým tímom o 3 ľuďoch)</li>
         </ul>
+        <aside class="notes">
+            declarativ by malo byt html, momentalne js do neho vklada dost spravania
+            imperative - riadenie toku programu, na starosti by ho mal mat controller
+        </aside>
     </section>
     <section>
         <h3>Čo nie je AngularJS</h3>
@@ -75,7 +85,11 @@
             <li>Ďalšia knižnica na manipuláciu s DOM</li>
             <li>Util knižnica (aj keď obsahuje takúto časť)</li>
             <li>Templating knižnica</li>
+            <li>Nič podobné ako Handlebars, Mustache, jQuery</li>
         </ul>
+        <aside class="notes">
+            angularJS je cely koncept pre tvorbu komplexnej web aplikacie
+        </aside>
     </section>
 </section>
 
@@ -88,7 +102,20 @@
         <li>prípravený použiť REST API napríklad existujúcej mobilnej app</li>
         <li>directives - rozšírenie jazyka html</li>
         <li>združuje html komponenty a ponúka ich ako znovupožiteľný kód</li>
+        <li>testovateľný (jasmine js)</li>
+        <li>veľká komunita, mnoho materiálov, tutoriálov, stackoverflow riešení</li>
     </ul>
+    <aside class="notes">
+        <p>
+            RESTful data layer
+            MV*-structure
+            Dynamic routes
+            Testing-support
+            good (API-) documentation
+            Production-ready
+            living community
+        </p>
+    </aside>
 </section>
 
 <section>
@@ -150,7 +177,7 @@
 <section>
     <section>
         <h3>Directives</h3>
-        <p>Directives vytvárajú možnosť rozšíriť HTML jazyk</p>
+        <p>Directives vytvárajú možnosť rozšíriť HTML jazyk. Je to s dvojcestným bindingom najsilnejší tromf AngularJS</p>
         <input type="text" ng-init="format='HH:mm:ss'" ng-model="format" class="styled">
         <br/>
         <hodinky format="format"></hodinky>
@@ -227,10 +254,9 @@ myModule.directive('directiveName', function factory(inject) {
         template: '&ltdiv&gt&lt/div&gt',
         templateUrl: 'directive.html',
         replace: false,
-        restrict: 'A',
+        restrict: 'AE',
         scope: false,
-        transclude: true,
-        compile: function compile(tElement, tAttrs, transclude) {
+        compile: function compile(tElement, tAttrs) {
             ...
         },
         link: function postLink(scope, iElement, iAttrs) {
@@ -249,7 +275,7 @@ myModule.directive('directiveName', function factory(inject) {
         <ul>
             <li>inicializácia</li>
             <li>pridanie správania</li>
-            <li>manipulácia s modelom v rámci bussiness logiky</li>
+            <li>manipulácia s modelom v rámci view logiky</li>
         </ul>
         <br/><br/>
         <div ng-controller="PadsController">
@@ -411,20 +437,35 @@ function DIController($scope, sluzba){
 </section>
 
 <section>
-    <section>
-        <h3>Mini aplikácia</h3>
-        <p>K web aplikácii potrebujeme ešte preklik na rôzne sekcie a komunikáciu so serverom.</p>
-    </section>
-    <section>
-        <h3>Silná evidencia</h3>
-        <div ng-view>
-
-        </div>
-    </section>
+    <h3>Testovanie</h3>
+    <p>Testovanie pomocou jasmine.js, možná integrácia s Jenkins-om <a href="http://localhost:63342/angularJSPresentation/js/test/nuliveTestRunner.html" target="_blank">test</a></p>
+<pre><code class="javascript">
+    describe("Unit: Testing services", function () {
+        beforeEach(function () {
+            module('pads');
+        });
+        it('should contain a service',
+            inject(function (sluzba) {
+                expect(sluzba).not.toBe(null);
+            }));
+        it('test for static data',
+            inject(function (a) {
+                expect(a.getLudia().length).toEqual(2);
+            }));
+    });
+</code></pre>
 </section>
 
 <section>
-    <h3>Zdroje</h3>
+    <h3>Mini aplikácia</h3>
+    <p>CRUD aplikácia napojená na mongolab cez REST API <a href="http://localhost:8080/slides/app.html" target="_blank">tu</a></p>
+</section>
+
+<section>
+    <h3>Otázky</h3>
+</section>
+<section>
+    <h3>Ďakujem za pozornosť :)</h3>
 </section>
 </div>
 
