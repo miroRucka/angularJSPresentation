@@ -1,0 +1,17 @@
+{
+    "name": "AngularJS presentation",
+    "description": "presentation about angularJS",
+    "author": "Miroslav Rucka",
+    "version": "1.0.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/miroRucka/angularJSPresentation.git"
+    },
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [
+        "angular presenation"
+    ],
+    "engine": "node >= 0.8.0"
+}
