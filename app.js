@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
-var port = process.env.VMC_APP_PORT || 8080;
+var port = process.env.VMC_APP_PORT || 8081;
 
 http.createServer(function (request, response) {
 
